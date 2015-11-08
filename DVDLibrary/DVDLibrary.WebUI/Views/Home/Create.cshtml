@@ -1,0 +1,57 @@
+﻿@model DVDLibrary.Models.DVDInfo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create a DVD Entry</h2>
+
+<hr/>
+<div>
+    <form action="/Home/CreateDVD" method="POST">
+        @Html.ValidationSummary(true)
+        <p>
+            @Html.ValidationMessageFor(m => m.Title)
+        @Html.ValidationMessageFor(m => m.ReleaseDate)
+    </p>
+    <p>
+        <label>Title:</label>
+        @Html.TextBoxFor(x => x.Title)
+        <label>Release Date:</label>
+        @Html.TextBoxFor(x => x.ReleaseDate)
+        <label>MPAA Rating</label>
+        @Html.TextBoxFor(x => x.MPAARating)
+    </p>
+    <p>@Html.ValidationMessageFor(m => m.DirectorsName)</p>
+    <p>
+        <label>Directers Name:</label>
+        @Html.TextBoxFor(x => x.DirectorsName)
+    </p>
+    <p>
+        @Html.ValidationMessageFor(m => m.Studio)
+    @Html.ValidationMessageFor(m => m.UserRating)
+    @Html.ValidationMessageFor(m => m.UserNotes)
+</p>
+<p>
+    <label>Studio:</label>
+    @Html.TextBoxFor(x => x.Studio)
+    <label> User Rating:</label>
+    @Html.TextBoxFor(x => x.UserRating)
+    <label> User Notes:</label>
+    @Html.TextBoxFor(x => x.UserNotes)
+</p>
+<p>@Html.ValidationMessageFor(m => m.ActorsInMovies)</p>
+<p>
+    <label>Actors In Movie:</label>
+    @Html.TextBoxFor(x => x.ActorsInMovies)
+</p>
+
+<hr />
+<p>
+    <input class="btn btn-primary" type="submit" value="Create DVD" />
+</p>
+</form>
+</div>
+
+
+

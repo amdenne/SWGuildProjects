@@ -1,0 +1,82 @@
+﻿@model List<DVDLibrary.Models.DVDInfo>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="divResult">
+    <br/>
+    <form action="/Home/IndexSearch" method="post">
+        <p>
+            <label>Search: </label>
+            <input type="text" id="SearchDVD" name="SearchDVD" /> 
+            <input type="submit" value="Search" onclick="location.href='@Url.Action("Home", "IndexSearch")'" />
+        </p>
+        </form>
+        <h2>DVD Grid</h2>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+
+    <table class="table">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model[0].Title)</td>
+            <td>@Html.DisplayNameFor(model => model[0].ReleaseDate)</td>
+            <td>@Html.DisplayNameFor(model => model[0].MPAARating)</td>
+            @*<td>@Html.DisplayNameFor(model => model[0].DirectorsName)</td>
+            <td>@Html.DisplayNameFor(model => model[0].Studio)</td>
+            <td>@Html.DisplayNameFor(model => model[0].UserRating)</td>
+            <td>@Html.DisplayNameFor(model => model[0].UserNotes)</td>
+            <td>@Html.DisplayNameFor(model => model[0].ActorsInMovies)</td>*@
+            @*<td>@Html.DisplayNameFor(model => model[0].BorrowerInfo)</td>*@
+            <td>ViewDvd</td>
+        </tr>
+        @if (Model == null)
+        {
+            Html.Display("---");
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                @Html.HiddenFor(modelItem => item.dvdID)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MPAARating)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.DirectorsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Studio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserRating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActorsInMovies)
+                </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.BorrowerInfo)
+                    </td>*@
+                <td>
+                        @Html.ActionLink("View", "DisplayDVD", new { id = item.dvdID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.dvdID })
+                    </td>
+            </tr>
+            }
+        }
+
+    </table>
+
+
+</div>

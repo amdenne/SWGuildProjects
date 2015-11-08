@@ -1,0 +1,8 @@
+CREATE PROCEDURE DeleteDVD
+(
+	@dvdID int
+	
+)AS
+
+DELETE DVDInfo
+WHERE dvdID = @dvdID

@@ -1,0 +1,54 @@
+﻿@model DVDLibrary.Models.DVDInfo
+
+@{
+    ViewBag.Title = "DisplayDVD";
+}
+
+<h2>DisplayDVD</h2>
+
+<div>
+    <table class="table">
+        <tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Title)</td>
+            <td>@Html.DisplayNameFor(model => model.ReleaseDate)</td>
+            <td>@Html.DisplayNameFor(model => model.MPAARating)</td>
+            <td>@Html.DisplayNameFor(model => model.DirectorsName)</td>
+            <td>@Html.DisplayNameFor(model => model.Studio)</td>
+            <td>@Html.DisplayNameFor(model => model.UserRating)</td>
+            <td>@Html.DisplayNameFor(model => model.UserNotes)</td>
+            <td>@Html.DisplayNameFor(model => model.ActorsInMovies)</td>
+            </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Title)</td>
+            <td>@Html.DisplayFor(model => model.ReleaseDate)</td>
+            <td>@Html.DisplayFor(model => model.MPAARating)</td>
+            <td>@Html.DisplayFor(model => model.DirectorsName)</td>
+            <td>@Html.DisplayFor(model => model.Studio)</td>
+            <td>@Html.DisplayFor(model => model.UserRating)</td>
+            <td>@Html.DisplayFor(model => model.UserNotes)</td>
+            <td>@Html.DisplayFor(model => model.ActorsInMovies)</td>
+        </tr>
+    </table>
+
+
+    @if (Model.BorrowerInfo.DateBorrowed == null)
+    {
+        <form action="/Home/CheckOut" method="POST">
+            @Html.HiddenFor(model => model.dvdID)
+            <label>Name:</label>
+           <p>@Html.TextBoxFor(model => model.BorrowerInfo.Borrower)</p> 
+            <button>Check Out</button>
+        </form>
+    }
+    else
+    {
+        <form action="/Home/CheckIn" method="post">
+            @Html.HiddenFor(model => model.dvdID)
+            <p><label>Current Borrower:</label> @Html.DisplayFor(model => model.BorrowerInfo.Borrower)</p>     
+            <p><label>Date Borrowed:</label> @string.Format("{0:yyyy/MM/dd}", Model.BorrowerInfo.DateBorrowed.Value)</p>  
+            <button>Check In</button>
+        </form>
+    }
+
+</div>

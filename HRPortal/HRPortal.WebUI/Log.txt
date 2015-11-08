@@ -1,0 +1,9 @@
+2015-10-30 15:22:47.6812|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|TESTING
+2015-11-02 09:22:08.5017|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|TESTING
+2015-11-02 09:22:08.5217|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|Invalid cast test
+2015-11-02 09:28:33.1783|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|TESTING
+2015-11-02 09:28:33.1953|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|Invalid cast test
+2015-11-02 09:28:33.1953|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|Invalid cast test
+2015-11-02 09:30:54.7860|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|More Testing
+2015-11-02 09:30:54.8030|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|Invalid cast test
+2015-11-02 09:30:54.8100|ERROR|HRPortal.WebUI.Models.CustomHandleErrorAttribute|Invalid cast test

@@ -1,0 +1,20 @@
+﻿@model HRPortal.Models.Policy
+    @{
+        ViewBag.Title = "Description";
+    }
+    <div class="container">
+        <h2>All Policies</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Policy:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(x => x.PolicyDescription)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a href="/Home/">Return to Home</a></p>
+    </div>

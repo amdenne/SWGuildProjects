@@ -1,0 +1,13 @@
+﻿@model HRPortal.Models.Application
+
+
+             <tr>
+                <td>@Html.DisplayFor(x => x.FirstName)</td>
+                <td>@Html.DisplayFor(x => x.LastName)</td>
+                <td> <form action="/Home/Application" method="POST">
+                    @Html.HiddenFor(x => x.AppID)
+                     <button class="btn btn-primary">View Application</button>
+                    </form>
+                </td>
+            </tr>
+       

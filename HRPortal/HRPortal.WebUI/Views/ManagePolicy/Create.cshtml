@@ -1,0 +1,26 @@
+﻿@model HRPortal.WebUI.Models.PolicyViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create A New Policy</h2>
+<hr />
+<div>
+    <form action="/ManagePolicy/CreatePolicy" method="POST">
+        
+        <p><label>Policy Category:</label></p>
+        <p>@Html.DropDownListFor(m => m.Category, Model.ListOfCategories)</p>
+        <p><label>Policy Title:</label></p>
+        <p>@Html.TextBoxFor(m => m.PolicyTitle)</p>
+            <label>New Policy:</label>
+            <br/>
+            @Html.TextAreaFor(x => x.PolicyDescription)
+           
+        <hr />
+        <p>
+            <button class="btn btn-primary">Submit</button>
+        </p>
+    </form>
+</div>
+
+

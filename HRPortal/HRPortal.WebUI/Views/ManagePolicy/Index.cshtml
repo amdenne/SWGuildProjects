@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Policies</h2>
+<h3></h3>
+<hr />
+<p>
+    <a class="btn btn-primary" role="button" href="/ManagePolicy/Create">Create Policy</a>
+</p>
+<p>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Categories
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="/ManagePolicy/Display?category=Benefits">Benefits</a></li>
+            <li><a href="/ManagePolicy/Display?category=Diversity">Diversity</a></li>
+            <li><a href="/ManagePolicy/Display?category=Hiring">Hiring</a></li>
+        </ul>
+        </div>
+</p>
+

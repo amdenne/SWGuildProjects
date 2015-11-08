@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "DisplayOrder";
+}
+
+<h2>Display Order</h2>
+@model FlooringProgram.Models.Order
+
+<h3>@Html.ActionLink("Back to Main Menu" , "Index", "Home")</h3>
+<form action="/Home/DisplayOrder" method="post">
+    <p>
+        <label>Order Date:</label>
+        @Html.TextBoxFor(x => x.OrderDate)
+    </p>
+    <p>
+        <label>Order Number:</label>
+        @Html.TextBoxFor(x => x.OrderNumber)
+    </p>
+</form>
+

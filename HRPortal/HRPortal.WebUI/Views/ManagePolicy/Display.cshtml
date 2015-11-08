@@ -1,0 +1,26 @@
+﻿@model IEnumerable<HRPortal.Models.Policy>
+
+@{
+    ViewBag.Title = "Display";
+}
+
+<div class="container">
+    <h2>All Policies</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Policy Description</th>
+                <th>Policy Category</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pol in Model)
+            {
+                @Html.Partial("_DisplayPolicies", pol)
+            }
+        </tbody>
+        
+    </table>
+    </div>
+

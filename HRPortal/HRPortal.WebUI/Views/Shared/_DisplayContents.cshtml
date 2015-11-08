@@ -1,0 +1,12 @@
+﻿@model HRPortal.Models.Policy
+@{
+    ViewBag.Title = "_DisplayContents";
+}
+
+
+<tr>
+    <td><a href="/Category/Description?Category=@Html.DisplayFor(x => x.Category)&PolicyTitle=@Html.DisplayFor(x => x.PolicyTitle)">
+            @Html.DisplayFor(x => x.PolicyTitle)</a></td>
+</tr>
+<p><a href="/Home/">Return to Home</a></p>
+

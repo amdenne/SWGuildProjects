@@ -1,0 +1,46 @@
+﻿@model FlooringProgram.Models.Order
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<form action="/Home/DisplayEditedOrder" method="post">
+
+    @Html.HiddenFor(x => x.OrderDate)
+    <p>
+        <label>Customer Name:</label>
+        @Html.TextBoxFor(x => x.CustomerName)
+    </p>
+
+    <p>
+        <label>Product Type:</label>
+        @Html.DropDownListFor(x => x.ProductType, EnumHelper.GetSelectList(typeof(FlooringProgram.Models.ProductType)))
+        @*<select>
+            <option value="ProductType.Carpet">Carpet</option>
+            <option value="ProductType.Laminate">Laminate</option>
+            <option value="ProductType.Tile">Tile</option>
+            <option value="ProductType.Wood">Wood</option>
+        </select>*@
+    </p>
+    <p>
+        <label>State:</label>
+        @Html.DropDownListFor(x => x.StateAbbreviation, EnumHelper.GetSelectList(typeof(FlooringProgram.Models.StateAbbreviation)))
+
+
+        @*<select>
+            <option value="StateAbbreviation.OH">Ohio</option>
+            <option value="StateAbbreviation.MI">Michigan</option>
+            <option value="StateAbbreviation.IN">Indiana</option>
+            <option value="StateAbbreviation.PA">Pennsylvania</option>
+        </select>*@
+    </p>
+    <p>
+        <label>Area of Floor:</label>
+        @Html.TextBoxFor(x => x.Area)
+    </p>
+
+    <p>
+        <button>Save</button>
+    </p>
+</form>

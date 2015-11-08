@@ -1,0 +1,22 @@
+﻿@model IEnumerable<HRPortal.Models.Time>
+@{
+    ViewBag.Title = "TimeSheet";
+}
+
+<h2>TimeSheet</h2>
+<hr />
+<p>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Employees
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            @foreach (var employee in Model)
+            {
+                @Html.Partial("EmployeeDropdown", employee);
+            }
+
+        </ul>
+    </div>
+</p>

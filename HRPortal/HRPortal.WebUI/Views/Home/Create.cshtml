@@ -1,0 +1,53 @@
+﻿@model HRPortal.WebUI.Models.ApplicationViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h1>HR Portal</h1>
+<h3>Create Job Application</h3>
+<hr />
+<div>
+    <form action="/Home/CreateApp" method="POST">
+        @Html.ValidationSummary(true)
+        <p>@Html.ValidationMessageFor(m => m.FirstName)
+           @Html.ValidationMessageFor(m => m.LastName)</p>
+        <p>
+            <label>First Name:</label>
+            @Html.TextBoxFor(x => x.FirstName)
+            <label> Last Name:</label>
+            @Html.TextBoxFor(x => x.LastName)
+        </p>
+        <p>@Html.ValidationMessageFor(m => m.PhoneNumber)</p>
+        <p>
+            <label>Phone Number:</label>
+            @Html.TextBoxFor(x => x.PhoneNumber)
+        </p>
+        <p>@Html.ValidationMessageFor(m => m.Address)
+           @Html.ValidationMessageFor(m => m.Zip)
+           @Html.ValidationMessageFor(m => m.City)</p>
+        <p>
+            <label>Address:</label>
+            @Html.TextBoxFor(x => x.Address)
+            <label> Zip Code:</label>
+            @Html.TextBoxFor(x => x.Zip)
+            <label> City:</label>
+            @Html.TextBoxFor(x => x.City)
+        </p>
+        <p>@Html.ValidationMessageFor(m => m.State)</p>
+        <p><label>State:</label></p>
+        <p>@Html.DropDownListFor(m => m.State, Model.ListOfStates)</p>
+
+        <p>@Html.ValidationMessageFor(m => m.JobHistory)</p>
+        <p>
+        <label>Job History:</label>
+            <br />
+            @Html.TextAreaFor(x => x.JobHistory)
+        </p>
+        <hr />
+        <p>
+            <input  class="btn btn-primary" type="submit" value="Create Application" />
+        </p>
+    </form>
+</div>
+

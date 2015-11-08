@@ -1,0 +1,23 @@
+﻿@model HRPortal.Models.Time
+@{
+    ViewBag.Title = "Submit";
+}
+
+<h2>Submit Time</h2>
+<hr/>
+
+@using (Html.BeginForm("SubmitTime", "Time"))
+{ 
+     @Html.ValidationSummary()
+    <p>Your name: @Html.EditorFor(m => m.FirstName) Last name: @Html.EditorFor(m => m.LastName)</p>
+
+    
+    <p>Date Worked: @Html.EditorFor(m => m.Date)</p>
+
+    <p>@Html.ValidationMessageFor(m => m.HoursWorked)</p>
+    <p>Hours Worked: @Html.EditorFor( m => m.HoursWorked)</p>
+    
+    <input type="submit" value="Submit Time" />
+}
+
+

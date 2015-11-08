@@ -1,0 +1,13 @@
+﻿@model HRPortal.Models.Policy
+
+<tr>
+    <td>@Html.DisplayFor(x => x.PolicyDescription)</td>
+    <td>@Html.DisplayFor(x => x.Category)</td>
+    <td>
+        <form action="/ManagePolicy/DeletePolicy/" method="POST">
+            @Html.HiddenFor(x => x.PolicyDescription)
+            <button class="btn btn-primary">Delete Policy</button>
+        </form>
+    </td>
+</tr>
+

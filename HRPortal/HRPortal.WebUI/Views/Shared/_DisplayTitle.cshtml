@@ -1,0 +1,12 @@
+﻿@model HRPortal.Models.Policy
+
+<tr>
+    <td>@Html.DisplayFor(x => x.PolicyTitle)</td>
+    <td>
+        <form action="/ManagePolicy/PolicyView/ method="POST">
+            @Html.HiddenFor(x => x.PolicyDescription)
+            <button class="btn btn-primary">View Policy</button>
+        </form>
+    </td>
+</tr>
+

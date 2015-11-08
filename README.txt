@@ -1,0 +1,1 @@
+This repository contains the projects I worked on during my time at The Software Guild.

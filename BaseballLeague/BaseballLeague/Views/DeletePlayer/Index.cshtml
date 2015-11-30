@@ -1,0 +1,78 @@
+﻿@model List<BaseballLeague.Domain.Player>
+@{
+    ViewBag.Title = "Index";
+}
+<div id="dialog-confirm" title="Delete Player?" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This player will be deleted. Are you sure?</p>
+</div>
+
+<h2>Delete Player</h2>
+    <div>
+        <table >
+            
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x[0].PlayerName)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].JerseyNumber)</th>
+                    <th>@Html.DisplayNameFor(x => x[0].Position)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var p in Model)
+            { 
+                <tr id="tablebody">
+                    <td>@Html.DisplayFor(x => p.PlayerName)</td>
+                    <td>@Html.DisplayFor(x => p.JerseyNumber)</td>
+                    <td>@Html.DisplayFor(x => p.Position)</td>
+                    <td><button id="deleteBtn" class="btn btn-danger delete" value="@Html.ValueFor(x => p.PlayerID)" role="button">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                </tr>
+            }
+                </tbody>
+        </table>
+    </div>
+
+    
+    @section Scripts{
+        <script type="text/javascript">
+            $(function () {
+                $("tr:even").css("background-color", "#00b300");
+                $("tr:odd").css("background-color", "#008000");
+
+                $(".delete").click(function () {
+                    var pID = $(this).val()
+                    $(function () {
+                        $("#dialog-confirm").dialog({
+                            resizable: false,
+                            height: 240,
+                            width: 480,
+                            modal: true,
+                            buttons: {
+                                "Delete Player": function () {
+                                    $.ajax({
+                                        method: "POST",
+                                        url: "/DeletePlayer/Delete/",
+                                        data: { PlayerID: pID },
+                                    })
+                                        .done(function (data) {
+                                            window.location.href = "/DeletePlayer/Index";
+                                        })
+                                        .error(function (j, m) {
+                                            alert("error");
+                                        });
+                                },
+                                "Cancel": function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+                    });
+                    
+                  
+
+                })
+                });
+            
+        </script>
+    }

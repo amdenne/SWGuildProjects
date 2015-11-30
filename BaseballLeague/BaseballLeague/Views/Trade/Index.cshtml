@@ -1,0 +1,152 @@
+﻿@model BaseballLeague.Domain.TradePlayer
+
+
+<form action="/Trade/ProcessTrade" method="post">
+    
+    <p>
+        <label id="LabelColor">Team 1:</label>
+   </p>
+    <p>
+        <label id="LabelColor">Select A Team:</label>
+    </p>
+    <p>
+        <select id="Team1ID" name="Team1ID"></select>
+    </p>
+    @Html.ValidationMessageFor(x => x.Team1ID)
+    <p>
+        <label id="LabelColor">Select A Player:</label>
+    </p>
+    <p>
+        <select id="Player1ID" name="Player1ID" value="@Html.ValueFor(x=> x.Player1ID)"></select>
+    </p>
+    @Html.ValidationMessageFor(x => x.Player1ID)
+
+
+    <br/>
+    <br/>
+
+    <p>
+        <label id="LabelColor">Team 2 :</label>
+    </p>
+    <p>
+        <label id="LabelColor">Select A Team:</label>
+    </p>
+    <p>
+        <select id="Team2ID" name="Team2ID"></select>
+    </p>
+    @Html.ValidationMessageFor(x => x.Team2ID)
+    <p>
+        <label id="LabelColor">Select A Player:</label>
+    </p>
+    <p>
+        <select id="Player2ID" name="Player2ID" value="@Html.ValueFor(x=> x.Player2ID)"></select>
+    </p>
+    @Html.ValidationMessageFor(x => x.Player2ID)
+    <p>
+        <input class="btn btn-primary" type="submit" value="Complete Trade" role="button" />
+    </p>
+ 
+</form>
+
+
+
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+                    method: "POST",
+                    url: "/Trade/CreateTeamDropdown"
+                })
+                .done(function (data) {
+                    $("#Team1ID").prepend("<option value='' selected='selected'></option>");
+                    $.each(data, function (index, team) {
+                        $('#Team1ID')
+                            .append($("<option></option>")
+                            .attr("value", team.TeamID)
+                            .text(team.TeamName));
+                    });
+                })
+                .fail(function (jqXHR, message) {
+                    alert(message);
+                }) ;
+
+        $("#Team1ID").change(function () {
+            var T = $(this).val();
+            $.ajax({
+                method: "POST",
+                url: "/Trade/CreatePlayerDropdown",
+                data: {
+                    TeamID: T
+                }
+            })
+                .done(function (data) {
+                    $("#Player1ID").prepend("<option value='' selected='selected'></option>");
+                    $.each(data, function (index, Player) {
+                        $('#Player1ID')
+                            .append($("<option></option>")
+                            .attr("value", Player.PlayerID)
+                            .text(Player.PlayerName));
+                    });
+                })
+                .fail(function (jqXHR, message) {
+                    alert(message);
+                });
+        });
+
+
+        $.ajax({
+            method: "POST",
+            url: "/Trade/CreateTeamDropdown"
+        })
+               .done(function (data) {
+                   $("#Team2ID").prepend("<option value='' selected='selected'></option>");
+                   $.each(data, function (index, team) {
+                       $('#Team2ID')
+                           .append($("<option></option>")
+                           .attr("value", team.TeamID)
+                           .text(team.TeamName));
+                   });
+               })
+               .fail(function (jqXHR, message) {
+                   alert(message);
+               });
+
+        $("#Team2ID").change(function () {
+            var T = $(this).val();
+            
+            $.ajax({
+                method: "POST",
+                url: "/Trade/CreatePlayerDropdown",
+                data: {TeamID: T}
+            })
+                .done(function (data) {
+                    $("#Player2ID").prepend("<option value='' selected='selected'></option>");
+                    $.each(data, function (index, Player) {
+                        $('#Player2ID')
+                            .append($("<option></option>")
+                            .attr("value", Player.PlayerID)
+                            
+                            .text(Player.PlayerName));
+                    });
+                })
+                .fail(function (jqXHR, message) {
+                    alert(message);
+                });
+                    });
+
+                
+        });
+
+
+
+
+
+    </script>
+}
+
+

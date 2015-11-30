@@ -1,0 +1,24 @@
+﻿@model List<CarDealership.Models.Vehicle>
+<table class="table-striped" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+            {
+            <tr>
+                <td title="@c.Description">@c.AdTitle</td>
+                <td>@string.Format("{0:C}", c.Price)</td>
+                <td class="buttons">
+                    <button class="btn btn-primary MoreInfo" id="@Html.ValueFor(x => c.VehicleID)" title="More Infomation" value="@Html.ValueFor(x => c.VehicleID)" onclick="find(this.id)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /></button>
+                    <button class="btn btn-success Request" title="Request More Data" value="@Html.ValueFor(x => c.VehicleID)" onclick="info()"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></button>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

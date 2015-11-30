@@ -1,0 +1,18 @@
+﻿@model CarDealership.UI.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "ShowUserInformation";
+}
+
+<h2>ShowUserInformation</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.FirstName)</dt>
+        <dd>@Html.DisplayFor(model => model.FirstName)</dd>
+
+        <dt>@Html.DisplayNameFor(Model => Model.LastName)</dt>
+        <dd>@Html.DisplayFor(model => model.LastName)</dd>
+    </dl>
+</div>

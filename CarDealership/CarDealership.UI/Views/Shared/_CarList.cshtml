@@ -1,0 +1,163 @@
+﻿@model List<CarDealership.Models.Vehicle>
+
+<div id="dialog-confirm" title="Delete Car?" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This car will be deleted. Are you sure?</p>
+</div>
+<div id="dialog-confirm1" title="Request Info" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Request Submited!</p>
+</div>
+
+<div class="selectedVehicle"></div>
+
+<br />
+
+<script type="text/javascript">
+function gotoPage(select){
+    window.location = select.value;
+}
+</script>
+
+<div id="adminButtons">
+    <select id="menu">
+        <option value="1">Cars</option>
+        <option value="2">Information</option>
+    </select>
+</div>
+<div id="mainTable">
+
+<table class="table-striped" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Price</th>
+            <th><button class="btn btn-success create" onclick="AddVehicle()">Add Vehicle <span class="glyphicon glyphicon-plus" aria-hidden="true" /></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+            {
+            <tr>
+                <td title="@c.Description">@c.AdTitle</td>
+                <td>@string.Format("{0:C}", c.Price)</td>
+                <td class="buttons">
+                    <button class="btn btn-primary MoreInfo" id="@Html.ValueFor(x => c.VehicleID)" title="More Infomation" value="@Html.ValueFor(x => c.VehicleID)" onclick="find(this.id)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /></button>
+                    <button class="btn btn-danger delete" title="Remove Vehicle" value="@Html.ValueFor(x => c.VehicleID)" onclick="deleteCar()"><span class="glyphicon glyphicon-trash" aria-hidden="true" /></button>
+                    <button class="btn btn-success Request" title="Request More Data" value="@Html.ValueFor(x => c.VehicleID)" onclick="info()"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></button>
+                 </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+@section Scripts
+{
+<script type="text/javascript">
+
+    $(function () {
+        $("#mainTable").load('/Home/_CarList');
+
+        $("#menu").change(function () {
+            var T = $(this).val();
+            if (T == 2) {
+                $("#mainTable").empty();
+                $("#mainTable").load("/Home/InfoList/")
+            }
+            else {
+                $("#mainTable").empty();
+                $("#mainTable").load("/Home/AdminIndex")
+            }
+        })
+
+
+    });
+
+
+
+    var url = '/api/ViewMore/';
+
+    function find(id) {
+        //var id = $(".MoreInfo").val();
+
+        $.getJSON(url + id)
+                .done(function (data) {
+                $('.selectedVehicle').empty();
+                $('.selectedVehicle').load('/Home/ViewPartial', data);
+                //$("#selectedVehicle").html(data)
+                })
+                    .fail(function (jqXhr, status, err) {
+                    $("#selectedVehicle").html("Error: " + err);
+                    })
+        }
+
+    function deleteCar() {
+        var vID = $(".delete").val();
+        $(function () {
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: 240,
+                width: 480,
+                modal: true,
+                buttons: {
+                    "Delete Car": function () {
+                        $.ajax({
+                            method: "POST",
+                            url: "/DeleteCars/Delete/",
+                            data: { VehicleID: vID }
+                        })
+                            .success(function (data) {
+                                window.location.href = "/Home/Index";
+                            })
+                            .error(function (j, m) {
+                                alert("error");
+                            });
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        })
+    }
+
+    function info() {
+                var vid = $(".Request").val()
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/RequestInfo/Index/",
+                                    data: { vid: vid },
+                                })
+                                    .done(function (data) {
+                        window.location.href = "/RequestInfo/RequestInfo";
+                                    })
+                                    .error(function (j, m) {
+                                        alert("error");
+                                    });
+            }
+
+    //function admin() {
+    //    $.get("/Home/AdminIndex").done(function () {
+    //        $("#mainTable").empty();
+    //        $("#mainTable").load('/Home/AdminIndex');
+    //    })
+    //.error(function (j, m) {
+    //    alert("error");
+    //});;
+    //}
+
+    function AddVehicle() {
+                var vid = $(".create").val()
+                $.ajax({
+                    type: "get",
+                    url: "/AddVehicle/AddVehicle/",
+                })
+                    .done(function (data) {
+                        window.location.href = "/AddVehicle/AddVehicle";
+                    })
+                    .error(function (j, m) {
+                        alert("error");
+                    });
+    }
+
+    </script>
+    }

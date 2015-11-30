@@ -1,0 +1,43 @@
+﻿@model CarDealership.Models.Vehicle
+
+
+<div id="MoreInfoTable" >
+    <div class="text-center img-responsive" >
+        @if (Model.PictureURL == null)
+        {
+            <p>Picture Coming soon...</p>
+        }
+        else
+        {
+            <img src = "@Model.PictureURL" style="width: 640px; height: 385px;" />
+        }
+    </div>
+   <div>
+       <table class="table-striped" style="width: 100%">
+           <thead>
+               <tr>
+                   <th>Make</th>
+                   <th>Model</th>
+                   <th>Year</th>
+                   <th>Mileage</th>
+                   <th>Ad Title</th>
+                   <th>Description</th>
+                   <th>Availablity</th>
+                   <th>Price</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr>
+                   <td>@Model.Make</td>
+                   <td>@Model.Model</td>
+                   <td>@Model.Year</td>
+                   <td>@Model.Mileage</td>
+                   <td>@Model.AdTitle</td>
+                   <td>@Model.Description</td>
+                   <td>@Model.IsAvailable</td>
+                   <td>@string.Format("{0:C}", Model.Price)</td>
+               </tr>
+           </tbody>
+       </table>
+   </div>
+</div>

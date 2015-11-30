@@ -1,0 +1,69 @@
+﻿@model BaseballLeague.Domain.Player
+@{
+    ViewBag.Title = "NewPlayer";
+}
+
+<h2>Create A New Player</h2>
+
+<div>
+    <form action="/Home/PlayerConfirm" method="post">
+
+        <p><label id="LabelColor">Assign A Team:</label></p>
+        <p><select id="TeamID" name="TeamID"></select></p>
+        @Html.ValidationMessageFor(m => m.TeamID)
+
+        <p><label id="LabelColor">Player Name:</label></p>
+        <p>@Html.EditorFor(x => x.PlayerName)</p>
+        @Html.ValidationMessageFor(m => m.PlayerName)
+
+        <p><label id="LabelColor">Jersey Number:</label></p>
+        <p>@Html.TextBoxFor(x => x.JerseyNumber)</p>
+        @Html.ValidationMessageFor(m => m.JerseyNumber)
+
+        <p><label id="LabelColor">Player Position:</label></p>
+        <p>@Html.TextBoxFor(x => x.Position)</p>
+        @Html.ValidationMessageFor(m => m.Position)
+
+        <p><label id="LabelColor">Batting Average:</label></p>
+        <p>@Html.TextBoxFor(x => x.BattingAverage)</p>
+        @Html.ValidationMessageFor(m => m.BattingAverage)
+
+
+        <p><label id="LabelColor">Years Played:</label></p>
+        <p>@Html.TextBoxFor(x => x.YearsPlayed)</p>
+        @Html.ValidationMessageFor(m => m.YearsPlayed)
+
+
+        @Html.ValidationSummary()
+        <p><input id="NewPlayer" class="btn btn-primary" type="submit" value="Create New Player" role="button" /></p>
+    </form>
+</div>
+     
+
+
+@section Scripts
+{
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            
+            method: "POST",
+            url: "/Home/TeamDropdown/",
+        })
+                .done(function (data) {
+                    $("#TeamID").prepend("<option value='' selected='selected'></option>");
+                    $.each(data, function (index, team) {
+                        $('#TeamID')
+                            .append($("<option></option>")
+                            .attr("value",team.TeamID)
+                            .text(team.TeamName)); 
+                    });
+
+                })
+                .fail(function (jqXHR, message) {
+                    alert(message);
+                });
+      
+        });
+ </script>
+    }

@@ -1,0 +1,31 @@
+﻿@model List<BaseballLeague.Domain.Player>
+
+
+<h2 id="LabelColor">Roster</h2>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>Jersey Number</th>
+                <th>Position</th>
+                <th>Batting Average</th>
+                <th>Years Played</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.PlayerName</td>
+                    <td>@p.JerseyNumber</td>
+                    <td>@p.Position</td>
+                    <td>@string.Format("{0:.000}", p.BattingAverage.Value)</td>
+                    <td>@p.YearsPlayed</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BaseballLeagueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="LeagueID" />
+          </Key>
+          <Property Name="LeagueID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="PlayerName" Type="varchar" MaxLength="50" />
+          <Property Name="JerseyNumber" Type="tinyint" />
+          <Property Name="Position" Type="varchar" MaxLength="25" />
+          <Property Name="BattingAverage" Type="decimal" Precision="3" Scale="0" />
+          <Property Name="YearsPlayed" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeagueID" Type="tinyint" Nullable="false" />
+          <Property Name="TeamName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Manager" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Player_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueID" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="LeagueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetPlayerAndTeamInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="playerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="TradePlayer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Team1ID" Type="int" Mode="In" />
+          <Parameter Name="Player1ID" Type="int" Mode="In" />
+          <Parameter Name="Team2ID" Type="int" Mode="In" />
+          <Parameter Name="Player2ID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="BaseballLeagueModelStoreContainer">
+          <EntitySet Name="League" EntityType="Self.League" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Player_Team" Association="Self.FK_Player_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Player" EntitySet="Player" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_League" Association="Self.FK_Team_League">
+            <End Role="League" EntitySet="League" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BaseballLeagueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="League">
+          <Key>
+            <PropertyRef Name="LeagueID" />
+          </Key>
+          <Property Name="LeagueID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK_Team_League" FromRole="League" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JerseyNumber" Type="Byte" />
+          <Property Name="Position" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="BattingAverage" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="YearsPlayed" Type="Byte" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Player_Team" FromRole="Player" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueID" Type="Byte" Nullable="false" />
+          <Property Name="TeamName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Manager" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="League" Relationship="Self.FK_Team_League" FromRole="Team" ToRole="League" />
+          <NavigationProperty Name="Players" Relationship="Self.FK_Player_Team" FromRole="Team" ToRole="Player" />
+        </EntityType>
+        <Association Name="FK_Team_League">
+          <End Role="League" Type="Self.League" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="League">
+              <PropertyRef Name="LeagueID" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="LeagueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Player_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Player" Type="Self.Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BaseballLeagueEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Leagues" EntityType="Self.League" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <AssociationSet Name="FK_Team_League" Association="Self.FK_Team_League">
+            <End Role="League" EntitySet="Leagues" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Player_Team" Association="Self.FK_Player_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <FunctionImport Name="GetPlayerAndTeamInfo" ReturnType="Collection(BaseballLeagueModel.GetPlayerAndTeamInfo_Result)">
+            <Parameter Name="playerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPlayerAndTeamInfo1" ReturnType="Collection(BaseballLeagueModel.GetPlayerAndTeamInfo1_Result)">
+          <Parameter Name="playerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="TradePlayer">
+            <Parameter Name="Team1ID" Mode="In" Type="Int32" />
+            <Parameter Name="Player1ID" Mode="In" Type="Int32" />
+            <Parameter Name="Team2ID" Mode="In" Type="Int32" />
+            <Parameter Name="Player2ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetPlayerAndTeamInfo_Result">
+          <Property Type="Int32" Name="PlayerID" Nullable="false" />
+          <Property Type="Int32" Name="TeamID" Nullable="false" />
+          <Property Type="String" Name="PlayerName" Nullable="true" MaxLength="50" />
+          <Property Type="Byte" Name="JerseyNumber" Nullable="true" />
+          <Property Type="String" Name="Position" Nullable="true" MaxLength="25" />
+          <Property Type="Decimal" Name="BattingAverage" Nullable="true" Precision="3" Scale="0" />
+          <Property Type="Byte" Name="YearsPlayed" Nullable="true" />
+          <Property Type="Int32" Name="TeamID1" Nullable="false" />
+          <Property Type="Byte" Name="LeagueID" Nullable="false" />
+          <Property Type="String" Name="TeamName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Manager" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetPlayerAndTeamInfo1_Result">
+          <Property Type="Int32" Name="PlayerID" Nullable="false" />
+          <Property Type="Int32" Name="TeamID" Nullable="false" />
+          <Property Type="String" Name="PlayerName" Nullable="true" MaxLength="50" />
+          <Property Type="Byte" Name="JerseyNumber" Nullable="true" />
+          <Property Type="String" Name="Position" Nullable="true" MaxLength="25" />
+          <Property Type="Decimal" Name="BattingAverage" Nullable="true" Precision="3" Scale="0" />
+          <Property Type="Byte" Name="YearsPlayed" Nullable="true" />
+          <Property Type="Int32" Name="TeamID1" Nullable="false" />
+          <Property Type="Byte" Name="LeagueID" Nullable="false" />
+          <Property Type="String" Name="TeamName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Manager" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BaseballLeagueModelStoreContainer" CdmEntityContainer="BaseballLeagueEntities">
+          <EntitySetMapping Name="Leagues">
+            <EntityTypeMapping TypeName="BaseballLeagueModel.League">
+              <MappingFragment StoreEntitySet="League">
+                <ScalarProperty Name="LeagueID" ColumnName="LeagueID" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="BaseballLeagueModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="JerseyNumber" ColumnName="JerseyNumber" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="BattingAverage" ColumnName="BattingAverage" />
+                <ScalarProperty Name="YearsPlayed" ColumnName="YearsPlayed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="BaseballLeagueModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="LeagueID" ColumnName="LeagueID" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPlayerAndTeamInfo1" FunctionName="BaseballLeagueModel.Store.GetPlayerAndTeamInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BaseballLeagueModel.GetPlayerAndTeamInfo1_Result">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="JerseyNumber" ColumnName="JerseyNumber" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="BattingAverage" ColumnName="BattingAverage" />
+                <ScalarProperty Name="YearsPlayed" ColumnName="YearsPlayed" />
+                <ScalarProperty Name="TeamID1" ColumnName="TeamID1" />
+                <ScalarProperty Name="LeagueID" ColumnName="LeagueID" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TradePlayer" FunctionName="BaseballLeagueModel.Store.TradePlayer" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

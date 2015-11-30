@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "ViewTeam";
+}
+
+<h2 id="LabelColor">View Teams</h2>
+
+<form action="/Home/PlayerConfirm" method="post">
+    <p>
+        <label id="LabelColor">Teams:</label>
+    </p>
+    <p>
+        <select id="Team"></select>
+    </p>
+    <p>
+        <div id="Players"></div>
+    </p>
+
+</form>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    $(function () {
+    
+        $.ajax({
+            method: "POST",
+            url: "/Home/TeamDropdown/",
+        })
+                .done(function (data) {
+                    $("#Team").prepend("<option value='' selected='selected'></option>");
+                    $.each(data, function (index, team) {
+                        $('#Team')
+                            .append($("<option></option>")
+                            .attr("value",team.TeamID)
+                            .text(team.TeamName));
+                    });
+                })
+                .fail(function (jqXHR, message) {
+                    alert(message);
+                });
+    });
+    $("#Team").change(function () {
+        var T = $(this).val();
+        $.ajax({
+            method: "POST",
+            url: "/Home/ViewPlayers",
+            data: { TeamID: T }
+        })
+            .done(function (data) {
+                $("#Players").html(data);
+            })
+            .fail(function (jqXHR, message) {
+                alert(message);
+            });
+
+    });
+
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model BaseballLeague.Domain.Team
+@{
+    ViewBag.Title = "NewTeam";
+}
+
+<h2 id="LabelColor">Create A New Team</h2>
+
+<hr/>
+
+<form action="/Home/TeamConfrim" method="post">   
+    
+    <p><label id="LabelColor">New Team Name:</label> @Html.TextBoxFor(x => x.TeamName)</p>
+    @Html.ValidationMessageFor(m => m.TeamName)
+
+    <p><label id="LabelColor">New Team Manager:</label>@Html.TextBoxFor(x => x.Manager)</p>
+    @Html.ValidationMessageFor(m => m.Manager)
+    
+    <p><label id="LabelColor">Select League:</label>@Html.HiddenFor(x=>x.LeagueID)</p>    
+    <p id="League">
+        <button type="button"  class="btn btn-primary LeagueButton" id="American"><img src="http://images.athlonsports.com/d/35581-1/American_League1.png" width="100" height="100" /></button>
+        <button type="button" class="btn btn-primary LeagueButton" id="National"><img src="http://getrichfromfantasy.com/wp-content/uploads/2015/04/National_League1.png" width="100" height="100" /></button>
+    </p >
+    @Html.ValidationMessageFor(m => m.LeagueID)
+
+    <p><input class="btn btn-primary" type="submit" value= "Create Team"role="button" /></p>
+</form>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".LeagueButton").click(function () {
+                var league = $(this).attr("id");
+                if(league === "American" )
+                {
+                    $("#LeagueID").val(1);
+                }
+                else
+                {
+                    $("#LeagueID").val(2);
+                }
+
+            });
+        });
+    </script>
+}
+
+

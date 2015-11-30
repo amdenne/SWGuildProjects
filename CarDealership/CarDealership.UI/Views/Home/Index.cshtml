@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div id="dialog-confirm" title="Delete Car?" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This car will be deleted. Are you sure?</p>
+</div>
+<div id="dialog-confirm1" title="Request Info" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Request Submited!</p>
+</div>
+
+<div class="selectedVehicle"></div>
+
+<br />
+
+<script type="text/javascript">
+function gotoPage(select){
+    window.location = select.value;
+}
+</script>
+
+
+@*<div id="adminButtons">
+    <select id="menu">
+        <option value="1">Cars</option>
+        <option value="2">Information</option>
+    </select>
+</div>*@
+<div id="mainTable"></div>
+
+<a href="/Home/AdminIndex" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> Admin </a>
+@section Scripts
+{
+<script type="text/javascript">
+
+    $(function () {
+        $("#mainTable").load('/Home/CarList');
+
+        $("#menu").change(function () {
+            var T = $(this).val();
+            if (T == 2) {
+                $("#mainTable").empty();
+                $("#mainTable").load("/Home/InfoList/")
+            }
+            else {
+                $("#mainTable").empty();
+                $("#mainTable").load("/Home/CarList")
+            }
+        })
+
+        
+    });
+   
+
+
+    var url = '/api/ViewMore/';
+
+    function find(id) {
+        //var id = $(".MoreInfo").val();
+
+        $.getJSON(url + id)
+                .done(function (data) {
+                $('.selectedVehicle').empty();
+                $('.selectedVehicle').load('/Home/ViewPartial', data);
+                //$("#selectedVehicle").html(data)
+                })
+                    .fail(function (jqXhr, status, err) {
+                    $("#selectedVehicle").html("Error: " + err);
+                    })
+        }
+
+    function deleteCar() {
+        var vID = $(".delete").val()
+        $(function () {
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: 240,
+                width: 480,
+                modal: true,
+                buttons: {
+                    "Delete Car": function () {
+                        $.ajax({
+                            method: "POST",
+                            url: "/DeleteCars/Delete/",
+                            data: { VehicleID: vID }
+                        })
+                            .success(function (data) {
+                                window.location.href = "/Home/Index";
+                            })
+                            .error(function (j, m) {
+                                alert("error");
+                            });
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        })
+    }
+
+    function info() {
+                var vid = $(".Request").val()
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/RequestInfo/Index/",
+                                    data: { vid: vid },
+                                })
+                                    .done(function (data) {
+                        window.location.href = "/RequestInfo/RequestInfo";
+                                    })
+                                    .error(function (j, m) {
+                                        alert("error");
+                                    });
+            }
+
+    //function admin() {
+    //    $.get("/Home/AdminIndex").done(function () {
+    //        $("#mainTable").empty();
+    //        $("#mainTable").load('/Home/AdminIndex');
+    //    })
+    //.error(function (j, m) {
+    //    alert("error");
+    //});;
+    //}
+
+    function AddVehicle() {
+                var vid = $(".create").val()
+                $.ajax({
+                    type: "get",
+                    url: "/AddVehicle/AddVehicle/",
+                })
+                    .done(function (data) {
+                        window.location.href = "/AddVehicle/AddVehicle";
+                    })
+                    .error(function (j, m) {
+                        alert("error");
+                    });
+    }
+
+
+</script>
+}

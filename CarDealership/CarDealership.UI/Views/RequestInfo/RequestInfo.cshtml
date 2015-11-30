@@ -1,0 +1,79 @@
+﻿
+
+@{
+    ViewBag.Title = "RequestInfo";
+}
+
+<div id="dialog-confirm" title="RequestInfo?" hidden>
+    <p id="modalMessage" style="color: black"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to submit this form?</p>
+</div>
+
+<h2>RequestInfo</h2>
+
+    <p><label>Vehicle ID: </label> <input type="text" name="VehicleID" /></p>
+    <p><label>Name: </label> <input type="text" name="Name"/></p>
+    <p><label>Email Address: </label> <input type="text" name="EmailAddress" /></p>
+    <p><label>Phone Number: </label> <input type="text" name="PhoneNumber" /></p>
+    <p><label>Best Time to Call: </label> <input type="text" name="BestTimeToCall" /></p>
+    <p><label>Preferred Contact Method: </label> <input type="text" name="PreferredContactMethod" /></p>
+    <p><label>Timeframe To Purchase: </label> <input type="text" name="TimeframeToPurchase" /></p>
+    <p><label>Additional Information: </label> <input type="text" name="AdditionalInformation" /></p>
+    <p><label>Last Contact Date: </label> <input type="text" name="LastContactDate" /></p>
+     
+    
+    <button type="submit" value="Submit" id="confirm" onclick="RequestInfo()">button</button>
+
+@section Scripts
+{
+<script type="text/javascript">
+
+    function RequestInfo() {
+        var request = $("#confirm").val()
+        $(function () {
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: 240,
+                width: 480,
+                modal: true,
+                buttons: {
+                    "RequestInfo": function () {
+                        $.ajax({
+                            method: "POST",
+                            url: "/RequestInfo/RequestInfo/",
+                            data: { RequestInfo: request }
+                        })
+                            .success(function (data) {
+                                window.location.href = "/Home/Index";
+                            })
+                            .error(function (j, m) {
+                                alert("error");
+                            });
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        })
+    }
+    
+
+
+
+    //$(document).ready(function () {
+    //    $('#confirm').click({
+    //        title: 'Confirm!',
+    //        content: 'Simple confirm!',
+    //        confirm: function () {
+    //            alert('Confirmed!');
+    //        },
+    //        cancel: function () {
+    //            alert('Canceled!')
+    //        }
+    //    });
+    //})
+
+    </script>
+    }
+
+

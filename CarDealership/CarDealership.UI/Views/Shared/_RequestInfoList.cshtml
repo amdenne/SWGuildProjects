@@ -1,0 +1,68 @@
+﻿@model List<CarDealership.Models.RequestInfo>
+
+<div id="RequestInfo">
+    <table class ="table-striped" id="InfoList">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Call Availabilty</th>
+                <th>Contact Method</th>
+                <th>Purchase Timeframe</th>
+                <th>Additional Info</th>
+                <th>Last Contacted</th>
+                <th>Request Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (var i in Model)
+                {
+                    @Html.HiddenFor(x => i.RequestInfoID);                 
+                    <tr id="@i.RequestInfoID"class="request" value="@i.RequestInfoID">
+                        <td>@i.Name</td>
+                        <td>@i.EmailAddress</td>
+                        <td>@i.PhoneNumber</td>
+                        <td>@i.BestTimeToCall</td>
+                        <td>@i.PreferredContactMethod</td>
+                        <td>@i.TimeframeToPurchase</td>
+                        <td>@i.AdditionalInformation</td>
+                        <td>@i.LastContactDate</td>
+                        <td><select class="status" value="@i.RequestInfoID">
+                                <option value="1">New</option>
+                                <option value="2">Awaiting Reply</option>
+                                <option value="3">Future Prospect</option>
+                                <option value="4">Missed Oppurtunity</option>
+                            </select>
+                       </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(function (){
+            $(".status")
+                .change(function(){
+                    var sID = $(this).val()
+                    var rID = $("#i_RequestInfoID").val()
+                    $.ajax({
+                        method: "post",
+                        url: "/Home/ChangeStatus/",
+                        data: { sID, rID }
+                    }).done(function (data){
+                        window.location.href = "/Home/Index";
+                    }).error(function (j, m) {
+                        alert("error");
+                    });
+
+                })
+        });
+                
+            
+        
+    </script>
+    }

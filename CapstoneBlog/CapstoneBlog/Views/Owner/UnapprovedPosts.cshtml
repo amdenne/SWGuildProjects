@@ -1,0 +1,85 @@
+﻿@model List<CapstoneBlog.Domain.Post>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="PostBG" style="background-color: black; padding: 10px 10px 10px 10px">
+    @*<form action="/Home/IndexSearch" method="post">
+        <p>
+            <input type="text" id="SearchBlog" name="SearchBlog" placeholder="Search By Category" />
+            <button type="submit" class="btn btn-info" onclick="location.href='@Url.Action("IndexSearch", "Home")'"><span class="glyphicon glyphicon-search"> </span> </button>
+        </p>
+    </form>*@
+    <h1>All Unapproved Posts</h1>
+
+    @foreach (var p in Model)
+    {
+        <div class="PostTitle" style="background-color:darkslateblue; color: white; padding: 0px 10px 10px 10px">
+            <div class="checkbox"> <input type="checkbox" value="@p.PostID" /></div>
+            <h2>@Html.DisplayFor(x => p.Title)</h2>
+            
+            <div class="Category-bar" style="background-color: steelblue; color: white; padding: 1px 4px 4px 4px">
+                <div class="Category-Title col-xs-6" style="background-color: steelblue; float: left; color: white; padding: 1px 4px 4px 4px">
+                    <h4>
+                        @foreach (var c in p.Categories)
+                        {
+                            @Html.DisplayFor(x => c.category)
+                        }
+                    </h4>
+                
+                </div>
+
+                <div class="Date-Posted col-xs-6" style="background-color: steelblue; float: right; color: white; padding: 1px 4px 4px 4px">
+                    <h4 align="right">@Html.DisplayFor(x => p.DatePosted)</h4>
+                </div>
+
+                <div class="PostContent" style="background-color:lightblue; color: black;  padding: 10px 10px 10px 10px">
+                    @Html.Raw(HttpUtility.HtmlDecode(p.Content))
+                </div>
+            </div>
+        </div>
+    }
+    <div style="padding: 20px 0px 0px 0px">
+    <button class="btn-sm btn-info" onclick="ApproveAll()"><span class="glyphicon glyphicon-thumbs-up"></span> Approve</button>
+    <button class="btn-sm btn-danger" onclick="DeleteAll()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+
+    </div>
+    
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+
+        });
+        
+        function ApproveAll() {
+            var checkedIds = Array();
+
+            $(":checked").each(function (i, v) {
+                checkedIds.push($(v).attr('value'));
+            });
+
+                $.post(
+                    '/Owner/Approve',
+                    { checkedIds }
+                ).success(function(){
+                    window.location.reload(true)
+                });
+        }
+
+        function DeleteAll() {
+            var checkedBoxes = new Array();
+            $(":checked").each(function (i, v) {
+                checkedBoxes.push($(v).attr('value'));
+            });
+
+            $.post(
+                '/Owner/OwnerDelete',
+                { checkedBoxes }
+                ).success(function (data) {
+                    window.location.reload(true);
+                });
+        }
+    </script>
+    }

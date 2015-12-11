@@ -1,0 +1,17 @@
+﻿@model CapstoneBlog.Models.Webpage
+
+<div class="Title" style="background-color:darkslateblue; color: white; padding: 0px 10px 10px 10px">
+    <h2>@Model.Title</h2>
+
+    <div class="Category-bar" style="background-color: steelblue; color: white; padding: 1px 4px 4px 4px">
+        <div class="Category-Title" style="background-color: steelblue; color: white; padding: 1px 4px 4px 4px">
+            <h4>
+
+            </h4>
+        </div>
+
+        <div class="Content" style="background-color:lightblue; color: black;  padding: 10px 10px 10px 10px">
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@model List<CapstoneBlog.Domain.Post>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="PostBG" style="background-color: black; padding: 10px 10px 10px 10px">
+    <form action="/Home/IndexSearch" method="post">
+        <p>
+            <input type="text" id="SearchBlog" name="SearchBlog" placeholder="Search By Category" />
+            <button type="submit" class="btn btn-info" onclick="location.href='@Url.Action("IndexSearch", "Home")'"><span class="glyphicon glyphicon-search"> </span> </button>
+            <a style="float:right" href="/Admin/NewAdminPost" class="btn btn-success btn btn-sm"><span class="glyphicon glyphicon-plus"></span> Add Post</a>
+        </p>
+    </form>
+
+    @foreach (var p in Model)
+    {
+        <div class="PostTitle" style="background-color:darkslateblue; color: white; padding: 0px 10px 10px 10px">
+            <h2>@Html.DisplayFor(x => p.Title)</h2>
+
+            <div class="Category-bar" style="background-color: steelblue; color: white; padding: 1px 4px 4px 4px">
+                <div class="Category-Title col-xs-6" style="background-color: steelblue; float: left; color: white; padding: 1px 4px 4px 4px">
+                    <h4>
+                        @foreach (var c in p.Categories)
+                        {
+                            @Html.DisplayFor(x => c.category);
+                        }
+                    </h4>
+                </div>
+
+                <div class="Date-Posted col-xs-6" style="background-color: steelblue; float: right; color: white; padding: 1px 4px 4px 4px">
+                    <h4 align="right">@Html.DisplayFor(x => p.DatePosted)</h4>
+                </div>
+
+                <div class="PostContent" style="background-color:lightblue; color: black;  padding: 10px 10px 10px 10px">
+                    @Html.Raw(HttpUtility.HtmlDecode(p.Content))
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

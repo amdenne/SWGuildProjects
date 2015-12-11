@@ -1,0 +1,76 @@
+﻿@model List<CapstoneBlog.Domain.Post>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="PostBG" style="background-color: black; padding: 10px 10px 10px 10px">
+    <form action="/Home/IndexSearch" method="post">
+        <p>
+            <input type="text" id="SearchBlog" name="SearchBlog" placeholder="Search By Category" />
+            <button type="submit" class="btn btn-info" onclick="location.href='@Url.Action("IndexSearch", "Home")'"><span class="glyphicon glyphicon-search"> </span> </button>
+        </p>
+    </form>
+
+    @foreach (var p in Model)
+    {
+        <div class="PostTitle" style="background-color:darkslateblue; color: white; padding: 0px 10px 10px 10px">
+            <input type="checkbox" name="checkbox" class="checkbox" value="@p.PostID"/>
+            <h2>@Html.DisplayFor(x => p.Title)</h2>
+
+            <div class="Category-bar" style="background-color: steelblue; color: white; padding: 1px 4px 4px 4px">
+                <div class="Category-Title col-xs-6" style="background-color: steelblue; float: left; color: white; padding: 1px 4px 4px 4px">
+                    <h4>
+                        @foreach (var c in p.Categories)
+                        {
+                            @Html.DisplayFor(x => c.category)
+                        }
+                    </h4>
+                </div>
+
+                <div class="Date-Posted col-xs-6" style="background-color: steelblue; float: right; color: white; padding: 1px 4px 4px 4px">
+                    <h4 align="right">@Html.DisplayFor(x => p.DatePosted)</h4>
+                </div>
+
+                <div class="PostContent" style="background-color:lightblue; color: black;  padding: 10px 10px 10px 10px">
+                    @Html.Raw(HttpUtility.HtmlDecode(p.Content))
+                    
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <br />
+    <div class="OwnerBtns">
+        <a href="/Owner/UnapprovedPosts">View Unapproved Posts</a>
+        <br />
+        <a href="/Owner/OwnerAddPost" class="add btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span>Add</a>
+        <button type="button" class="del btn btn-danger"><span class="glyphicon glyphicon-minus-sign"></span>Delete</button>
+        <a href="/Owner/CreateWebpage" class="btn btn-info"><span class="glyphicon glyphicon-file"></span>New Page</a>
+    </div>
+    
+</div>
+
+@section Scripts
+{
+<script type="text/javascript">
+
+    $(function() {
+        
+        $(".del").on("click", del);
+
+    });
+    
+        function del(){
+            var checkedBoxes = new Array();
+            $(":checked").each(function(i, v){
+                checkedBoxes.push($(v).attr('value'));
+            });
+
+            $.post(
+                '/Owner/OwnerDelete',
+                { checkedBoxes }
+                ).success(function (data) {
+                    window.location.reload(true);
+                })
+        }
+</script>
+    }
